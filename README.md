@@ -33,6 +33,26 @@ Taskr stores the tasks in a plain text file in the following format:
 
 As you can see it's just a text file with a timestamp for every task.
 
+##Install
+Installing taskr is pretty straightforward, run the following commands
+
+####With git
+````bash
+git clone git://github.com/minhajuddin/taskr.git ~/.taskr-code
+ln -s ~/.taskr-code/bin/taskr ~/bin/t
+cd ~/.taskr-code/ && rake setup
+````
+####Without git
+````bash
+curl -Ls https://github.com/minhajuddin/taskr/tarball/master > /tmp/taskr.tar.gz
+cd /tmp/
+tar -xvf taskr.tar.gz
+mv $(find .  -maxdepth 1 -type d | grep minhajuddin*) ~/.taskr-code
+ln -s ~/.taskr-code/bin/taskr ~/bin/t
+cd ~/.taskr-code/ && rake setup
+````
+
+
 ##Command line help
 ````bash
     $ t -h
