@@ -6,9 +6,14 @@ module Taskr
 
       optparse = OptionParser.new do |opts|
 
-        opts.on('-l', '--list [NUM]', 'List all the tasks') do |num|
-          num = num ? num.to_i : 5
-          tl.list(num)
+        opts.banner = "Usage: taskr [options]"
+
+        opts.on('-a', '--add task description', :NONE, 'Add task to the list') do
+          tl.append(ARGV.join(' '))
+          exit
+        end
+        opts.on('-l', '--list [NUM]', Integer, 'List all the tasks') do |num|
+          tl.list(num||5)
           exit
         end
         opts.on('-L','--list-all' ,'List all the tasks' ) do
@@ -16,23 +21,32 @@ module Taskr
           exit
         end
         opts.on('-d','--delete id1,id2,..', Array,'Delete tasks(s)' ) do |ids|
-          #tl.delete(ARGV[1])
+          tl.delete(ids)
           exit
         end
-        opts.on('-s','--search' ,'Search all the tasks' ) do
-          tl.search(ARGV[1])
+        opts.on('-s','--search REGEX' ,'Search all the tasks' ) do |q|
+          tl.search(q)
           exit
         end
         opts.on('-e','--edit' ,'Open the tasks file in vi' ) do
+          #TODO: should check the $EDITOR var and use it
           system("vi #{Filepath}")
           exit
         end
-        opts.on('-t','--tag' ,'Tag task(s)' ) do
-          tl.tag(ARGV[1], ARGV[2])
+        opts.on('-t','--tag id1,id2,.. :tag1 :tag2 ..', Array, 'Tag task(s)') do |ids|
+          tl.tag(ids, ARGV)
           exit
         end
-        opts.on('-u','--untag' ,'Untag task(s)' ) do
-          tl.untag(ARGV[1], ARGV[2])
+        opts.on('-u','--untag id1,id2,.. :tag1 :tag2 ..', Array, 'Untag task(s)') do |ids|
+          tl.untag(ids, ARGV)
+          exit
+        end
+        opts.on('-p','--postpone id1,id2,..', Array, 'Postpone task(s) to tomorrow') do |ids|
+          #TODO:cleanup this implementation
+          today_tag = Task::TagTransforms.find{|k,v| v == ':today'}.first
+          tag = Task::TagTransforms.find{|k,v| v == ':tomorrow'}.first
+          tl.tag(ids, [tag])
+          tl.untag(ids, [today_tag])
           exit
         end
         #opts.on('today','today','today') do
@@ -40,13 +54,6 @@ module Taskr
         #tl.tag(ARGV[1], tag)
         #exit
         #end
-        opts.on('-p','--postpone','Postpone the task to tomorrow') do
-          today_tag = Task::TagTransforms.find{|k,v| v == ':today'}.first
-          tag = Task::TagTransforms.find{|k,v| v == ':tomorrow'}.first
-          tl.tag(ARGV[1], tag)
-          tl.untag(ARGV[1], today_tag)
-          exit
-        end
         #opts.on('-tray','tray','tray') do
         #tl.tag(ARGV[1], ':tray')
         #exit
@@ -69,7 +76,12 @@ module Taskr
         end
       end
 
+      begin
       optparse.parse!
+      rescue OptionParser::MissingArgument => e
+        puts e.message
+        puts optparse.inspect
+      end
 
     end
   end

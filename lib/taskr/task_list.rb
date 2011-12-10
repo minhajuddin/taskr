@@ -27,26 +27,28 @@ class TaskList
     File.open(Filepath, 'a') {|f| f.puts "#{Time.now.strftime "%Y%m%d%H%M%S"} #{task.strip}"}
   end
 
-  def tag(id, tag)
-    tasks = find(id)
+  def tag(ids, tags)
+    tasks = find(ids)
+    tags = tagify(tags)
 
-    tag = ':' + tag unless tag =~ /^:.+/
-
-    tasks.each {|task| task.tags << tag }
+    tasks.each {|task| task.tags += tags }
     save
 
     print tasks
   end
 
-  def untag(id, tag)
-    tasks = find(id)
-    tasks.each {|task| task.tags.delete(tag) }
+  def untag(ids, tags)
+    tasks = find(ids)
+    tags = tagify(tags)
+
+    tasks.each {|task| task.tags -= tags }
+
     save
     print tasks
   end
 
-  def delete(id)
-    tasks = find(id)
+  def delete(ids)
+    tasks = find(ids)
     tasks.each{|x| @tasks.delete(x)}
     save
 
@@ -70,15 +72,20 @@ class TaskList
   end
 
   def find(ids)
-    ids = ids.to_s.split(',')
     tasks = @tasks.find_all{|x| ids.include?(x.id)}
     return tasks if tasks && !tasks.empty?
     puts 'task(s) not found'.colorize(:red)
-    exit 0
+    exit
   end
 
   def show(id)
     print find(id)
+  end
+
+  def tagify(tags)
+    tags.map do |tag|
+      tag =~ /^:.+/ ? tag : ":#{tag}"
+    end
   end
 
 end
