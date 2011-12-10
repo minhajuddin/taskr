@@ -8,5 +8,11 @@ require 'time'
 require 'optparse'
 require 'taskr'
 
-Filepath = File.expand_path("~/.data/tasks")
+
+Filepath = File.expand_path("~/.taskr/tasks.taskr")
+#setup taskr if it's not already setup
+if !File.exist?(Filepath)
+  system("cd #{taskr_base_path} && rake setup")
+end
+
 Taskr::Runner.execute
