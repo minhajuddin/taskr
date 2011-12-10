@@ -76,7 +76,7 @@ cd ~/.taskr-code/ && rake setup
 ##Vim files
 There is a small vim syntax file the vim directory, just copy it to your `~/.vim/syntax` folder and put the line below in your `~/.vimrc` to get some basic syntax highlighting when you edit the tasks raw file.
 
-````vimscript
+````vim
 au BufNewFile,BufRead *.taskr  setf taskr
 ````
 ##FAQ
