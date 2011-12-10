@@ -6,7 +6,7 @@ class TaskList
   end
 
   def list(num = 5)
-    print num == :all ? @tasks : @tasks.select{|x| x.visible?}
+    print num == :all ? @tasks : @tasks.select{|x| x.visible?}.take(num)
   end
 
   def search(q)
@@ -14,6 +14,7 @@ class TaskList
   end
 
   def print(tasks)
+    #TODO: should say listing (5/25) tasks
     puts "(#{tasks.count.to_s.colorize(:red)}) tasks"
     puts '---------------------'.colorize(:blue)
     tasks.each do |t|

@@ -6,16 +6,17 @@ module Taskr
 
       optparse = OptionParser.new do |opts|
 
-        opts.on('-l', '--list', 'List all the tasks') do
-          tl.list
+        opts.on('-l', '--list [NUM]', 'List all the tasks') do |num|
+          num = num ? num.to_i : 5
+          tl.list(num)
           exit
         end
         opts.on('-L','--list-all' ,'List all the tasks' ) do
           tl.list(:all)
           exit
         end
-        opts.on('-d','--delete' ,'Delete tasks(s)' ) do
-          tl.delete(ARGV[1])
+        opts.on('-d','--delete id1,id2,..', Array,'Delete tasks(s)' ) do |ids|
+          #tl.delete(ARGV[1])
           exit
         end
         opts.on('-s','--search' ,'Search all the tasks' ) do

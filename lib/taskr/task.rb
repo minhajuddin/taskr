@@ -62,7 +62,7 @@ class Task
   end
 
   def id
-    self.raw_time.to_s[8..-1].to_i.to_s_62
+    self.raw_time.to_s[8..-1].to_i.to_s_tid
   end
 
   def transformed_tags
