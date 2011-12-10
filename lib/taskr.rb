@@ -1,5 +1,8 @@
 require 'taskr/version'
-require 'taskr/args'
-require 'taskr/context'
-require 'taskr/commands'
+#extensions
+require 'taskr/task'
+require 'taskr/task_list'
+require 'taskr/fixnum'
+require 'taskr/string'
+require 'taskr/time'
 require 'taskr/runner'

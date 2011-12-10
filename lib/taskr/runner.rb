@@ -1,69 +1,75 @@
 module Taskr
   class Runner
-    attr_reader :args
+    def self.execute
 
-    def initialize(*args)
-      @args = Args.new(args)
-      Commands.run(@args)
-    end
+      tl = TaskList.new
 
-    # Shortcut
-    def self.execute(*args)
-      new(*args).execute
-    end
+      optparse = OptionParser.new do |opts|
 
-    # A string representation of the command that would run.
-    def command
-      if args.skip?
-        ''
-      else
-        commands.join('; ')
-      end
-    end
-
-    # An array of all commands as strings.
-    def commands
-      args.commands.map do |cmd|
-        if cmd.respond_to?(:join)
-          # a simplified `Shellwords.join` but it's OK since this is only used to inspect
-          cmd.map { |arg| arg = arg.to_s; (arg.index(' ') || arg.empty?) ? "'#{arg}'" : arg }.join(' ')
-        else
-          cmd.to_s
+        opts.on('-l', '--list', 'List all the tasks') do
+          tl.list
+          exit
+        end
+        opts.on('-L','--list-all' ,'List all the tasks' ) do
+          tl.list(:all)
+          exit
+        end
+        opts.on('-d','--delete' ,'Delete tasks(s)' ) do
+          tl.delete(ARGV[1])
+          exit
+        end
+        opts.on('-s','--search' ,'Search all the tasks' ) do
+          tl.search(ARGV[1])
+          exit
+        end
+        opts.on('-e','--edit' ,'Open the tasks file in vi' ) do
+          system("vi #{Filepath}")
+          exit
+        end
+        opts.on('-t','--tag' ,'Tag task(s)' ) do
+          tl.tag(ARGV[1], ARGV[2])
+          exit
+        end
+        opts.on('-u','--untag' ,'Untag task(s)' ) do
+          tl.untag(ARGV[1], ARGV[2])
+          exit
+        end
+        #opts.on('today','today','today') do
+        #tag = Task::TagTransforms.find{|k,v| v == ':today'}.first
+        #tl.tag(ARGV[1], tag)
+        #exit
+        #end
+        opts.on('-p','--postpone','Postpone the task to tomorrow') do
+          today_tag = Task::TagTransforms.find{|k,v| v == ':today'}.first
+          tag = Task::TagTransforms.find{|k,v| v == ':tomorrow'}.first
+          tl.tag(ARGV[1], tag)
+          tl.untag(ARGV[1], today_tag)
+          exit
+        end
+        #opts.on('-tray','tray','tray') do
+        #tl.tag(ARGV[1], ':tray')
+        #exit
+        #end
+        #opts.on('show','show','show') do
+        #tl.show(ARGV[1])
+        #exit
+        #end
+        opts.on('-x','--xmobar','Text to be shown in xmobar') do
+          tl.xmobar
+          exit
+        end
+        opts.on( '-v', '--version', 'Display version of taskr' ) do
+          puts Taskr::VERSION
+          exit
+        end
+        opts.on( '-h', '--help', 'Display this screen' ) do
+          puts opts
+          exit
         end
       end
-    end
 
-    # Runs the target git command with an optional callback. Replaces
-    # the current process.
-    #
-    # If `args` is empty, this will skip calling the git command. This
-    # allows commands to print an error message and cancel their own
-    # execution if they don't make sense.
-    def execute
-      if args.noop?
-        puts commands
-      elsif not args.skip?
-        if args.chained?
-          execute_command_chain
-        else
-          exec(*args.to_exec)
-        end
-      end
-    end
+      optparse.parse!
 
-    # Runs multiple commands in succession; exits at first failure.
-    def execute_command_chain
-      commands = args.commands
-      commands.each_with_index do |cmd, i|
-        if cmd.respond_to?(:call) then cmd.call
-        elsif i == commands.length - 1
-          # last command in chain
-          exec(*cmd)
-        else
-          exit($?.exitstatus) unless system(*cmd)
-        end
-      end
     end
   end
 end
-
