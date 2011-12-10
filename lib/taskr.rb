@@ -1,5 +1,5 @@
-require "taskr/version"
-
-module Taskr
-  # Your code goes here...
-end
+require 'taskr/version'
+require 'taskr/args'
+require 'taskr/context'
+require 'taskr/commands'
+require 'taskr/runner'
