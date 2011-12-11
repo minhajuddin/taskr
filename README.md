@@ -1,6 +1,7 @@
 #Taskr
 *Simple command line utility to manage your tasks*
 
+##Usage
 Taskr allows you to embed all the information about the task *in* the task.
 
  - Any word in a task which begins with `:` is considered a *tag*.
@@ -14,7 +15,7 @@ Taskr allows you to embed all the information about the task *in* the task.
 
 Deleted tasks are copied into the `~/.taskr/tasks.taskr.done` file with a timestamp, we can probably add something in the future which allows us to check the time spent on tasks and give more insight into the kind of tasks we work on.
 
-###Screenshot
+##Screenshot
 ![Screenshot](http://i.imgur.com/EtaEG.png)
 
 ##File storage
@@ -89,21 +90,42 @@ There is a small vim syntax file the vim directory, just copy it to your `~/.vim
 au BufNewFile,BufRead *.taskr  setf taskr
 ````
 ##FAQ
- 1. Why is it not packaged as a gem?  
- To make it run faster.
- 2. How fast is it?  
+ 1. **Why is it not packaged as a gem?**  
+ To make it run faster. More info here: https://gist.github.com/284823
+ 2. **Seriously, is 0.5s is gonna make a difference?**  
+ *Yes*, This is not just from *my* experience. The perceived slowness of many apps has made me avoid them. [Jeff Atwood post on it is a good read](http://www.codinghorror.com/blog/2011/06/performance-is-a-feature.html)  
+
+    > [Google found that] the page with 10 results took 0.4 seconds to generate. The page with 30 results took 0.9 seconds. Half a second delay caused a 20% drop in traffic. Half a second delay killed user satisfaction.
+    > In A/B tests, [Amazon] tried delaying the page in increments of 100 milliseconds and found that even very small delays would result in substantial and costly drops in revenue.
+
+ 3. **How fast is it?**  
  Very fast
 
-````bash
-$ time t
-real    0m0.039s
-user    0m0.040s
-sys     0m0.000s
-````
+    ````bash
+    $ time t
+    real    0m0.039s
+    user    0m0.040s
+    sys     0m0.000s
+    ````
+ 4. **How is it better than Task Warrior or X?**  
+   It is more hackable. To efficiently use it, you don't have to learn hundreds of switches.
+   It's similar to markdown, in that, it allows you to attach info to your task in a way which makes sense.
+   Read the usage section.
+ 5. **Give me a real reason.**  
+    No one loves a task manager built by others, because everyone has something which they do differently. I created this to suit my workflow and needs. And because it's built in ruby and aims to be configurable, I hope it is easier to personalize.
 
+##Todo
+ - allow listing of tasks from other *sources*
+ - add tab completion
 
 ##Author
-Created by Khaja Minhajuddin (minhajuddin (at) cosmicvent (dot) com)
+  Created by Khaja Minhajuddin: minhajuddin (at) cosmicvent (dot) com
 ##Credits
  - Uses colorize `String` extension from https://github.com/fazibear/colorize
  - Timeago `Time` extension from: http://stackoverflow.com/a/195894/24105
+
+##Alternatives
+  There are a few other alternatives if you don't like this:
+ - [Task warrior, written in C++](http://taskwarrior.org/projects/show/taskwarrior)
+ - [dooby](https://github.com/rafmagana/dooby)
+
