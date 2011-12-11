@@ -55,22 +55,31 @@ cd ~/.taskr-code/ && rake setup
 
 ##Command line help
 ````bash
-    $ t -h
-    Usage: taskr [options]
-        -a, --add task description       Add task to the list
-        -l, --list [NUM]                 List all the tasks
-        -L, --list-all                   List all the tasks
-        -d, --delete id1,id2,..          Delete tasks(s)
-        -s, --search REGEX               Search all the tasks
-        -e, --edit                       Open the tasks file in vi
-        -t id1,id2,.. :tag1 :tag2 ..,    Tag task(s)
-            --tag
-        -u id1,id2,.. :tag1 :tag2 ..,    Untag task(s)
-            --untag
-        -p, --postpone id1,id2,..        Postpone task(s) to tomorrow
-        -x, --xmobar                     Text to be shown in xmobar
-        -v, --version                    Display version of taskr
-        -h, --help                       Display this screen
+$ bin/taskr -h
+Usage: taskr [options]
+  Two of the most used options are -l and -a,
+  and you can use these options without the switches.
+
+  e.g.
+    $ taskr awesome task here hurray for no switches
+      #adds the task to the list and is equivalent to taskr -a awes..
+    $ taskr
+      #lists all the tasks and is equivalent to 'taskr -l'
+
+Options:
+    -a, --add task description                Add task to the list
+    -l, --list [NUM]                          List all the tasks
+    -L, --list-all                            List all the tasks
+    -d, --delete id1,id2,..                   Delete tasks(s)
+    -s, --search REGEX                        Search all the tasks
+    -e, --edit                                Open the tasks file in vi
+    -t, --tag id1,id2,.. :tag1 :tag2 ..,      Tag task(s)
+    -u, --untag id1,id2,.. :tag1 :tag2 ..,    Untag task(s)
+    -p, --postpone id1,id2,..                 Postpone task(s) to tomorrow
+    -x, --xmobar                              Text to be shown in xmobar
+    -v, --version                             Display version of taskr
+    -h, --help                                Display this screen
+
 ````
 
 ##Vim files

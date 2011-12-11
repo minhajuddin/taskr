@@ -6,7 +6,19 @@ module Taskr
 
       optparse = OptionParser.new do |opts|
 
-        opts.banner = "Usage: taskr [options]"
+        opts.banner =<<EOS
+Usage: taskr [options]
+  Two of the most used options are -l and -a,
+  and you can use these options without the switches.
+
+  e.g.
+    $ taskr awesome task here hurray for no switches
+      #adds the task to the list and is equivalent to taskr -a awes..
+    $ taskr
+      #lists all the tasks and is equivalent to 'taskr -l'
+
+Options:
+EOS
 
         opts.on('-a', '--add task description', :NONE, 'Add task to the list') do
           tl.append(ARGV.join(' '))
@@ -77,10 +89,17 @@ module Taskr
       end
 
       begin
-      optparse.parse!
+        optparse.parse!
       rescue OptionParser::MissingArgument => e
         puts e.message
         puts optparse.inspect
+      end
+
+      #if it reaches this line, it means no swtiches/options were passed
+      if ARGV.empty?
+        tl.list
+      else
+        tl.append(ARGV.join(' '))
       end
 
     end
