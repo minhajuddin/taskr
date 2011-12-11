@@ -1,3 +1,5 @@
+require 'time'
+require 'optparse'
 require 'taskr/version'
 #extensions
 require 'taskr/task'

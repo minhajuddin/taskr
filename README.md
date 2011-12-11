@@ -118,9 +118,13 @@ au BufNewFile,BufRead *.taskr  setf taskr
 ##Todo
  - allow listing of tasks from other *sources*
  - add tab completion
+ - allow users to configure priority rules
+ - allow users to configure :tag rules
+ - allow users to configure :tag transforms
 
 ##Author
   Created by Khaja Minhajuddin: minhajuddin (at) cosmicvent (dot) com
+
 ##Credits
  - Uses colorize `String` extension from https://github.com/fazibear/colorize
  - Timeago `Time` extension from: http://stackoverflow.com/a/195894/24105

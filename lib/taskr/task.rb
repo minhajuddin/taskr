@@ -1,7 +1,7 @@
 class Task
   #TODO: should always use date tags when marked as :today, :tomorrow
   #TODO: convert these to constants
-  PriorityRegex =  /^([+-]+)|([+-]+)$/
+  PriorityRegex = /[+-]+/
   TagRegex = /(:[a-zA-Z0-9_:-]+)/
   TagTransforms = {
     (Time.now).strftime(":%Y%m%d") => ':today',
@@ -38,7 +38,11 @@ class Task
   end
 
   def priority
-    -( in_tray? ? 100 : 0 + priority_text.count('*') + priority_text.count('+') - priority_text.count('-') + (self.visible? ? 2 : 0 ) + (self.tags.include?(:today) ? 3 : 0) )
+    priority = 0
+    priority += 100 if in_tray? #TODO: should probably live in the config
+    priority += 10 if self.tags.include?(':today')
+    priority += priority_text.count('+')
+    priority -= priority_text.count('-')
   end
 
   def in_tray?
