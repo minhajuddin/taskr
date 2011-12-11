@@ -20,11 +20,11 @@ class Task
 
   def self.parse(line)
     tags = line.scan(TagRegex).flatten || []
-    Task.new(raw_time: line[0..13].to_i, raw_text: line[15..-1], raw: line, tags: tags )
+    Task.new(:raw_time => line[0..13].to_i, :raw_text => line[15..-1], :raw => line, :tags => tags )
   end
 
   def to_s
-    text_string = in_tray? ? self.text.colorize(background: :white, color: :black) : (self.transformed_tags.include?(':today') ? self.text.colorize(color: :cyan) : self.text)
+    text_string = in_tray? ? self.text.colorize(:background => :white, :color => :black) : (self.transformed_tags.include?(':today') ? self.text.colorize(:color => :cyan) : self.text)
     "#{id.colorize(:yellow)}. #{text_string} #{ tag_s } (#{self.time.colorize(:magenta)} #{self.priority_text.colorize(:light_yellow)})"
   end
 
@@ -58,7 +58,7 @@ class Task
   end
 
   def time
-    Time.strptime(raw_time.to_s,  "%Y%m%d%H%M%S").to_pretty
+    Time.parse(raw_time.to_s).to_pretty
   end
 
   def id

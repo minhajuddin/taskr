@@ -35,6 +35,7 @@ Taskr stores the tasks in a plain text file in the following format:
 As you can see it's just a text file with a timestamp for every task.
 
 ##Install
+**You need ruby - 1.8.7 or 1.9.2 to use taskr.**
 Installing taskr is pretty straightforward, run the following commands
 
 ####With git
