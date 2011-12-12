@@ -25,7 +25,7 @@ EOS
           exit
         end
         opts.on('-l', '--list [NUM]', Integer, 'List all the tasks') do |num|
-          tl.list(num||5)
+          tl.list(num||20) #TODO: move the number 20 to configuration
           exit
         end
         opts.on('-L','--list-all' ,'List all the tasks' ) do
@@ -97,7 +97,7 @@ EOS
 
       #if it reaches this line, it means no swtiches/options were passed
       if ARGV.empty?
-        tl.list
+        tl.list(20)  #TODO: move the number 20 to configuration
       else
         tl.append(ARGV.join(' '))
       end
