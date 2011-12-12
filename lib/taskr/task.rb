@@ -58,6 +58,10 @@ class Task
     return true
   end
 
+  def recurring?
+    tags.any?{|x| %w[:daily :weekly :monthly].include?(x)}
+  end
+
   def priority_text
     raw_text.match(PriorityRegex).to_s
   end

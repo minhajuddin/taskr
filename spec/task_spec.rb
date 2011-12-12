@@ -31,4 +31,13 @@ describe Task do
 
   end
 
+  describe "helper methods" do
+    it "recurring? should return true for tasks with :daily :weekly and :monthly tags" do
+      create_task("awesome :daily").recurring?.should be_true
+      create_task("awesome :weekly").recurring?.should be_true
+      create_task("awesome :monthly").recurring?.should be_true
+      create_task("awesome").recurring?.should be_false
+    end
+  end
+
 end

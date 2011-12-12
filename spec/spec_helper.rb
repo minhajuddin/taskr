@@ -19,3 +19,7 @@ def write_test_taskr_file
 EOS
       end
 end
+
+def create_task(text)
+  Task.parse("20110303222222 #{text}")
+end

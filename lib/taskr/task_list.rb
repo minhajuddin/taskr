@@ -50,13 +50,20 @@ class TaskList
 
   def delete(ids)
     tasks = find(ids)
-    tasks.each{|x| @tasks.delete(x)}
+    deleted_tasks = []
+    tasks.each do|t|
+      if t.recurring?
+        t.tags << ':hidden'
+      else
+        deleted_tasks << @tasks.delete(t)
+      end
+    end
     save
 
     File.open(Filepath+".done", 'a') do |f|
-      tasks.each{|task| f.puts "#{Time.now.strftime "%Y%m%d%H%M%S"} #{task.serialize}" }
+      deleted_tasks.each{|task| f.puts "#{Time.now.strftime "%Y%m%d%H%M%S"} #{task.serialize}" }
     end
-    puts tasks
+    tasks
   end
 
   def save

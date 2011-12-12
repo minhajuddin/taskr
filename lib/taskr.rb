@@ -1,4 +1,5 @@
 require 'time'
+require 'fileutils'
 require 'optparse'
 require 'taskr/version'
 #extensions
