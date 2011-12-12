@@ -50,6 +50,7 @@ class Task
   end
 
   def visible?
+    return false if tags.include?(':hidden')
     return true if Time.is_weekend? && tags.include?(':weekend')
     return false if tags.include?(':weekend') && !Time.is_weekend?
 

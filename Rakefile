@@ -15,5 +15,6 @@ task :setup do
   end
 
   run_cmd 'touch ~/.taskr/tasks.taskr ~/.taskr/tasks.taskr.done'
+  run_cmd 'mkdir ~/.taskr/tmp'
   puts "add this alias to your ~/.bashrc : alias t='<path-to-script>/bin/taskr'"
 end

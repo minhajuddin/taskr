@@ -3,6 +3,7 @@ class TaskList
   def initialize
     @lines = File.readlines(Filepath).map{|x| x.chomp.strip}
     @tasks = @lines.map{|x| Task.parse(x)}.sort_by{|x| [x.priority, x.raw_time]}
+    Scheduler.new(self).materialize_recurring_tasks
   end
 
   def list(num = 5)
@@ -10,7 +11,7 @@ class TaskList
   end
 
   def search(q)
-    print @tasks.select{|x| x.raw =~ /#{q}/i}
+    @tasks.select{|x| x.raw =~ /#{q}/i}
   end
 
   def print(tasks)

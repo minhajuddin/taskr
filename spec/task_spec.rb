@@ -23,4 +23,12 @@ describe Task do
 
   end
 
+  describe "#visible?" do
+
+    it "should hide tasks with a :hidden tag" do
+      Task.parse("20110303222222 awesome task :hidden").visible?.should == false
+    end
+
+  end
+
 end
