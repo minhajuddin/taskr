@@ -15,6 +15,17 @@ Taskr allows you to embed all the information about the task *in* the task.
 
 Deleted tasks are copied into the `~/.taskr/tasks.taskr.done` file with a timestamp, we can probably add something in the future which allows us to check the time spent on tasks and give more insight into the kind of tasks we work on.
 
+##Features
+  - Tagging of tasks
+  - Recurring tasks (available in the [dev branch](https://github.com/minhajuddin/taskr/tarball/dev))
+  - Contextual task list which changes based on the day of the week (e.g. you may have some tasks to which you want to be shown only on weekends)
+  - Simple and powerful configuration using ruby (available in [dev branch](https://github.com/minhajuddin/taskr/tarball/dev))
+  - Highlighting of tasks based on deadline :today
+  - Simple way to prioritize tasks
+  - Edit your tasks in vi
+  - More coming soon ..
+
+
 ##Screenshot
 ![Screenshot](http://i.imgur.com/EtaEG.png)
 
@@ -121,12 +132,20 @@ au BufNewFile,BufRead *.taskr  setf taskr
 
 ##Author
   Created by Khaja Minhajuddin: minhajuddin (at) cosmicvent (dot) com
+
 ##Credits
  - Uses colorize `String` extension from https://github.com/fazibear/colorize
  - Timeago `Time` extension from: http://stackoverflow.com/a/195894/24105
 
+##Contribute
+To contribute to taskr, just clone the repository and send me a patch or pull request.
+
+You can even contribute by testing the *new* features from the [dev branch](https://github.com/minhajuddin/taskr/tree/dev).
+[Click here to download the dev code](https://github.com/minhajuddin/taskr/tarball/dev)
+
 ##Alternatives
   There are a few other alternatives if you don't like this:
+
  - [Task warrior, written in C++](http://taskwarrior.org/projects/show/taskwarrior)
  - [dooby](https://github.com/rafmagana/dooby)
 
