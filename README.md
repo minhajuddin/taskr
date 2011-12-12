@@ -138,7 +138,7 @@ au BufNewFile,BufRead *.taskr  setf taskr
  - Timeago `Time` extension from: http://stackoverflow.com/a/195894/24105
 
 ##Contribute
-To contribute to taskr, just clone the repository and send me a patch or pull request.
+To contribute to taskr, just clone the repository, make your changes, and send me a patch or pull request.
 
 You can even contribute by testing the *new* features from the [dev branch](https://github.com/minhajuddin/taskr/tree/dev).
 [Click here to download the dev code](https://github.com/minhajuddin/taskr/tarball/dev)
