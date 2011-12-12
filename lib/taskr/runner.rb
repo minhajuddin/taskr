@@ -25,7 +25,7 @@ EOS
           exit
         end
         opts.on('-l', '--list [NUM]', Integer, 'List all the tasks') do |num|
-          tl.list(num||20) #TODO: move the number 20 to configuration
+          tl.list(num||Configuration.val(:list_size))
           exit
         end
         opts.on('-L','--list-all' ,'List all the tasks' ) do
@@ -62,7 +62,7 @@ EOS
             end
             exit
           else
-            system("vi #{Filepath}")
+            system("vi #{Configuration.tasks_dir}")
             exit
           end
         end
@@ -76,14 +76,14 @@ EOS
         end
         opts.on('-p','--postpone id1,id2,..', Array, 'Postpone task(s) to tomorrow') do |ids|
           #TODO:cleanup this implementation
-          today_tag = Task::TagTransforms.find{|k,v| v == ':today'}.first
-          tag = Task::TagTransforms.find{|k,v| v == ':tomorrow'}.first
+          today_tag = Configuration.val(:tag_transforms).find{|k,v| v == ':today'}.first
+          tag = Configuration.val(:tag_transforms).find{|k,v| v == ':tomorrow'}.first
           tl.tag(ids, [tag])
           tl.untag(ids, [today_tag])
           exit
         end
         #opts.on('today','today','today') do
-        #tag = Task::TagTransforms.find{|k,v| v == ':today'}.first
+        #tag = Configuration.val(:tag_transforms).find{|k,v| v == ':today'}.first
         #tl.tag(ARGV[1], tag)
         #exit
         #end
@@ -118,7 +118,7 @@ EOS
 
       #if it reaches this line, it means no swtiches/options were passed
       if ARGV.empty?
-        tl.list(20)  #TODO: move the number 20 to configuration
+        tl.list(Configuration.val(:list_size))
       else
         tl.append(ARGV.join(' '))
       end

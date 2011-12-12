@@ -14,13 +14,8 @@ class Scheduler
     write_flag_file
   end
 
-  #TODO: should move this to some configuration
-  def taskr_dir
-    File.dirname(Filepath)
-  end
-
   def flag_file
-    File.join(taskr_dir, 'tmp', Time.now.strftime("%Y%m%d"))
+    File.join(Configuration.tasks_dir, 'tmp', Time.now.strftime("%Y%m%d"))
   end
 
   def write_flag_file

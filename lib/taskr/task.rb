@@ -1,13 +1,6 @@
 class Task
   #TODO: should always use date tags when marked as :today, :tomorrow
   #TODO: convert these to constants
-  PriorityRegex = /[+-]+/
-  TagRegex = /(:[a-zA-Z0-9_:-]+)/
-  TagTransforms = {
-    (Time.now).strftime(":%Y%m%d") => ':today',
-    (Time.now - 24 * 60 * 60).strftime(":%Y%m%d") => ':yesterday',
-    (Time.now + 24 * 60 * 60 ).strftime(":%Y%m%d") => ':tomorrow'
-  }
 
   attr_accessor :raw, :raw_time, :raw_text, :tags
 
@@ -19,7 +12,7 @@ class Task
   end
 
   def self.parse(line)
-    tags = line.scan(TagRegex).flatten || []
+    tags = line.scan(Configuration.val(:tag_regex)).flatten || []
     Task.new(:raw_time => line[0..13].to_i, :raw_text => line[15..-1], :raw => line, :tags => tags )
   end
 
@@ -63,7 +56,7 @@ class Task
   end
 
   def priority_text
-    raw_text.match(PriorityRegex).to_s
+    raw_text.match(Configuration.val(:priority_regex)).to_s
   end
 
   def time
@@ -75,11 +68,11 @@ class Task
   end
 
   def transformed_tags
-    tags.map{|x| TagTransforms[x] || x}
+    tags.map{|x| Configuration.val(:tag_transforms)[x] || x}
   end
 
   def text
-    raw_text.gsub(TagRegex, '').gsub(PriorityRegex, '').strip
+    raw_text.gsub(Configuration.val(:tag_regex), '').gsub(Configuration.val(:priority_regex), '').strip
   end
 
 end

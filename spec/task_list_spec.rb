@@ -6,6 +6,7 @@ describe TaskList do
 
   before(:each) do
     FakeFS.activate!
+    load_test_config_file
     write_test_taskr_file
   end
 

@@ -1,12 +1,14 @@
-ConfigFile = File.expand_path('~/.taskr/config')
+ConfigFile = File.expand_path('~/.taskr/config.rb')
 
 require 'time'
 require 'fileutils'
 require 'tempfile'
 require 'optparse'
+require 'taskr/configuration'
+Configuration.load
+
 require 'taskr/version'
 #extensions
-require 'taskr/configuration'
 require 'taskr/task'
 require 'taskr/task_list'
 require 'taskr/fixnum'

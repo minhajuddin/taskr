@@ -1,7 +1,7 @@
 class TaskList
 
   def initialize
-    @lines = File.readlines(Filepath).map{|x| x.chomp.strip}
+    @lines = File.readlines(Configuration.tasks_file_path).map{|x| x.chomp.strip}
     @tasks = @lines.map{|x| Task.parse(x)}.sort_by{|x| [-x.priority, x.raw_time]} #TODO: should allow users to configure the sort order
     Scheduler.new(self).materialize_recurring_tasks
   end
@@ -25,7 +25,7 @@ class TaskList
 
   def append(task)
     #TODO: decipher special tags like :today, :tomorrow
-    File.open(Filepath, 'a') {|f| f.puts "#{Time.now.strftime "%Y%m%d%H%M%S"} #{task.strip}"}
+    File.open(Configuration.tasks_file_path, 'a') {|f| f.puts "#{Time.now.strftime "%Y%m%d%H%M%S"} #{task.strip}"}
   end
 
   def tag(ids, tags)
@@ -60,7 +60,7 @@ class TaskList
     end
     save
 
-    File.open(Filepath+".done", 'a') do |f|
+    File.open(Configuration.completed_tasks_file_path, 'a') do |f|
       deleted_tasks.each{|task| f.puts "#{Time.now.strftime "%Y%m%d%H%M%S"} #{task.serialize}" }
     end
     tasks
@@ -68,7 +68,7 @@ class TaskList
 
   def save
     task_data = @tasks.map{|x| x.serialize }.join("\n")
-    File.open(Filepath, 'w') {|f| f.puts task_data}
+    File.open(Configuration.tasks_file_path, 'w') {|f| f.puts task_data}
   end
 
   def xmobar

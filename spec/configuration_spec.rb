@@ -28,6 +28,11 @@ describe Configuration do
     it "should load config values" do
       Configuration.config.attributes[:list_size].should == 25
     end
+
+    it ".val should return the value of attr" do
+      Configuration.val( :list_size ).should == 25
+    end
+
   end
 
 
