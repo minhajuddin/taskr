@@ -40,10 +40,31 @@ EOS
           tl.search(q)
           exit
         end
-        opts.on('-e','--edit' ,'Open the tasks file in vi' ) do
+        opts.on('-e','--edit [ID]' ,'Open the task(s) file in vi' ) do |id|
           #TODO: should check the $EDITOR var and use it
-          system("vi #{Filepath}")
-          exit
+          #TODO: need to refactor this
+          if id
+            task = tl.find([id]).first
+            tmp_file_path = Tempfile.open(id) do |f|
+              f.write task.raw_text
+              f.path
+            end
+            system("vi #{ tmp_file_path }")
+            new_task_raw = File.readlines(tmp_file_path).first.chomp
+            if  new_task_raw.nil? || new_task_raw.strip.empty? || new_task_raw == task.raw_text
+              puts 'task not changed'
+            else
+              #TODO: need to refactor this
+              new_task = Task.parse(task.raw_time.to_s + new_task_raw)
+              task.raw_text = new_task_raw
+              task.tags = new_task.tags
+              tl.save
+            end
+            exit
+          else
+            system("vi #{Filepath}")
+            exit
+          end
         end
         opts.on('-t','--tag id1,id2,.. :tag1 :tag2 ..', Array, 'Tag task(s)') do |ids|
           tl.tag(ids, ARGV)
