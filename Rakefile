@@ -6,7 +6,7 @@ end
 desc 'Setup taskr'
 task :setup do
 
-  if Dir.exists?(File.expand_path('~/Dropbox'))
+  if File.directory?(File.expand_path('~/Dropbox'))
     run_cmd 'mkdir -p ~/Dropbox/taskr'
     run_cmd 'ln -s ~/Dropbox/taskr ~/.taskr'
   else
