@@ -3,13 +3,13 @@ require "fakefs/safe"
 
 describe TaskList do
 
+
+  before(:each) do
+    FakeFS.activate!
+    write_test_taskr_file
+  end
+
   describe "#delete" do
-
-    before(:each) do
-      FakeFS.activate!
-      write_test_taskr_file
-    end
-
     it "should add :hidden tag to recurring tasks" do
       list = TaskList.new
       tasks = list.search(":daily")
@@ -22,10 +22,23 @@ describe TaskList do
 
     end
 
-    after(:each) do
-      FakeFS.deactivate!
+  end
+
+  describe "#tasks" do
+
+    it "should sort tasks based on priority" do
+      list = TaskList.new
+
+      list.tasks.each_cons(2).each do |t1, t2|
+        t1.priority.should >= t2.priority
+      end
+
     end
 
+  end
+
+  after(:each) do
+    FakeFS.deactivate!
   end
 
 end

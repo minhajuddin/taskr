@@ -2,7 +2,7 @@ class TaskList
 
   def initialize
     @lines = File.readlines(Filepath).map{|x| x.chomp.strip}
-    @tasks = @lines.map{|x| Task.parse(x)}.sort_by{|x| [x.priority, x.raw_time]}
+    @tasks = @lines.map{|x| Task.parse(x)}.sort_by{|x| [-x.priority, x.raw_time]} #TODO: should allow users to configure the sort order
     Scheduler.new(self).materialize_recurring_tasks
   end
 
