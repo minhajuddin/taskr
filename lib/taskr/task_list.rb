@@ -1,7 +1,7 @@
 class TaskList
 
   def initialize
-    @lines = File.readlines(Filepath).map{|x| x.chomp.strip}
+    @lines = File.readlines(Filepath).map{|x| x.chomp.strip}.reject{|x| x.empty?}
     @tasks = @lines.map{|x| Task.parse(x)}.sort_by{|x| [x.priority, x.raw_time]}
   end
 
