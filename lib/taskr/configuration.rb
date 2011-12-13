@@ -5,7 +5,7 @@ class Configuration
 
     @attributes = {
       :list_size => 20,
-      :data_dir => '~/.taskr',
+      :tasks_dir => '~/.taskr',
       :priority_regex  => /[+-]+/,
       :tag_regex  =>  /(:[a-zA-Z0-9_:-]+)/,
       :editor => 'vi',
@@ -38,7 +38,7 @@ class Configuration
   end
 
   def self.tasks_dir
-    File.expand_path val(:data_dir)
+    File.expand_path val(:tasks_dir)
   end
 
   def self.tasks_file_path

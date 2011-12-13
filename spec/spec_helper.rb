@@ -22,7 +22,7 @@ def load_test_config_file
   FileUtils.mkdir_p File.dirname(ConfigFile)
   File.open(File.expand_path(ConfigFile), 'w') do |f|
     f.puts <<EOS
-data_dir "~/.taskr"
+tasks_dir "~/.taskr"
 list_size 25
 priority_regex /[+-]+/ #TODO: should probably be a priority_evaluator?
 tag_regex  /(:[a-zA-Z0-9_:-]+)/
