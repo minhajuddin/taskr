@@ -5,12 +5,13 @@
 Taskr allows you to embed all the information about the task *in* the task.
 
  - Any word in a task which begins with `:` is considered a *tag*.
- - The tags `:weekend, :today, :tomorrow, :tray` have a special meaning.  
+ - The tags `:weekend, :today, :tomorrow, :tray, :daily, :weekly, :monthly` have a special meaning.  
    Tasks tagged:
    - `:today` are highlighted in a different color in the listing and get a higher priority.
    - `:tomorrow` are hidden from the default listing. You can list all tasks using the `-L` switch.
    - `:weekend` are visible in the default listing only on weekends. You can list all tasks using the `-L` switch.
    - `:tray` are shown on the top and have a different background color, they have the highest priority. You can put tasks into your tray when you are working on them, or when you want to tackle a bunch of tasks.
+   - `:daily`, `:weekly`,`:monthly` are considered recurring tasks. These tasks will be added to your list everyday. You can run `taskr -d id` to delete the recurring task, and they'll promptly show up the next day or next week or next month ('cause they are recurring).
 - Tasks which have a bunch of pluses(`+`) get their priority increased by the number of `+`s. On the other hand tasks with minuses(`-`)s in them have lower priorities
 
 Deleted tasks are copied into the `~/.taskr/tasks.taskr.done` file with a timestamp, we can probably add something in the future which allows us to check the time spent on tasks and give more insight into the kind of tasks we work on.
