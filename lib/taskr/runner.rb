@@ -33,11 +33,12 @@ EOS
           exit
         end
         opts.on('-d','--delete id1,id2,..', Array,'Delete tasks(s)' ) do |ids|
-          tl.delete(ids)
+          puts "deleted:"
+          tl.print tl.delete(ids)
           exit
         end
         opts.on('-s','--search REGEX' ,'Search all the tasks' ) do |q|
-          tl.search(q)
+          tl.print tl.search(q)
           exit
         end
         opts.on('-e','--edit [ID]' ,'Open the task(s) file in vi' ) do |id|
