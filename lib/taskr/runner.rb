@@ -56,13 +56,13 @@ EOS
               f.path
             end
             edit_file(tmp_file_path)
-            new_task_raw = File.readlines(tmp_file_path).first.chomp
-            if  new_task_raw.nil? || new_task_raw.strip.empty? || new_task_raw == task.raw_text
-              puts 'task not changed'
+            new_task_raw = File.readlines(tmp_file_path).first.to_s.chomp.strip
+            if  new_task_raw.empty? || new_task_raw == task.raw_text
+              puts 'task not changed'.colorize(:red)
             else
               #TODO: need to refactor this
               new_task = Task.parse(task.raw_time.to_s + new_task_raw)
-              task.raw_text = new_task_raw
+              task.raw_text.strip = new_task_raw
               task.tags = new_task.tags
               tl.save
             end
