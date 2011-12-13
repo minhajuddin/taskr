@@ -1,5 +1,10 @@
 module Taskr
   class Runner
+
+    def self.edit_file(file_path)
+      system("#{Configuration.editor} #{file_path}")
+    end
+
     def self.execute
 
       tl = TaskList.new
@@ -50,7 +55,7 @@ EOS
               f.write task.raw_text
               f.path
             end
-            system("vi #{ tmp_file_path }")
+            edit_file(tmp_file_path)
             new_task_raw = File.readlines(tmp_file_path).first.chomp
             if  new_task_raw.nil? || new_task_raw.strip.empty? || new_task_raw == task.raw_text
               puts 'task not changed'
@@ -63,7 +68,7 @@ EOS
             end
             exit
           else
-            system("vi #{Configuration.tasks_dir}")
+            edit_file Configuration.tasks_file_path
             exit
           end
         end

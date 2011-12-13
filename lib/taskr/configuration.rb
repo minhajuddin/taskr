@@ -8,6 +8,7 @@ class Configuration
       :data_dir => '~/.taskr',
       :priority_regex  => /[+-]+/,
       :tag_regex  =>  /(:[a-zA-Z0-9_:-]+)/,
+      :editor => 'vi',
 
       :tag_transforms => {
         (Time.now).strftime(":%Y%m%d") => ':today',
@@ -46,6 +47,10 @@ class Configuration
 
   def self.completed_tasks_file_path
     File.join(tasks_dir, 'tasks.taskr.done')
+  end
+
+  def self.editor
+    val(:editor)
   end
 
 end
