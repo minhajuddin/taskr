@@ -86,14 +86,17 @@ class TaskList
     exit
   end
 
-  def show(id)
-    print find(id)
-  end
-
   def tagify(tags)
     tags.map do |tag|
-      tag =~ /^:.+/ ? tag : ":#{tag}"
-    end
+      tag = tag.strip
+      if tag.empty?
+        nil
+      elsif tag =~ /^:.+/
+        tag
+      else
+        ":#{tag}"
+      end
+    end.compact
   end
 
 end

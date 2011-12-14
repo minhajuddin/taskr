@@ -57,12 +57,12 @@ EOS
             end
             edit_file(tmp_file_path)
             new_task_raw = File.readlines(tmp_file_path).first.to_s.chomp.strip
-            if  new_task_raw.empty? || new_task_raw == task.raw_text
+            if  new_task_raw.empty? || new_task_raw == task.raw_text.strip
               puts 'task not changed'.colorize(:red)
             else
               #TODO: need to refactor this
               new_task = Task.parse(task.raw_time.to_s + new_task_raw)
-              task.raw_text.strip = new_task_raw
+              task.raw_text = new_task_raw
               task.tags = new_task.tags
               tl.save
             end
@@ -97,10 +97,10 @@ EOS
         #tl.tag(ARGV[1], ':tray')
         #exit
         #end
-        #opts.on('show','show','show') do
-        #tl.show(ARGV[1])
-        #exit
-        #end
+        opts.on('-f','--find id1,id2,..', Array, 'Find tasks with ids and show their details') do |ids|
+          tl.print tl.find(ids)
+          exit
+        end
         opts.on('-x','--xmobar','Text to be shown in xmobar') do
           tl.xmobar
           exit
