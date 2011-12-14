@@ -71,10 +71,6 @@ class TaskList
     File.open(Configuration.tasks_file_path, 'w') {|f| f.puts task_data}
   end
 
-  def xmobar
-    puts "(#{@tasks.find_all(&:visible?).count}/#{@tasks.count}) #{@tasks.find_all{|x| x.tags.include?(':tray') && x.visible? }.map{|x| x.text[0..20] + '.. '}.join(':')}"
-  end
-
   def tasks
     @tasks
   end

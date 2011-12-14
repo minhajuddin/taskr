@@ -90,7 +90,7 @@ Options:
     -t, --tag id1,id2,.. :tag1 :tag2 ..,      Tag task(s)
     -u, --untag id1,id2,.. :tag1 :tag2 ..,    Untag task(s)
     -p, --postpone id1,id2,..                 Postpone task(s) to tomorrow
-    -x, --xmobar                              Text to be shown in xmobar
+    -f, --find id1,id2,..                     Find tasks with ids and show their details
     -v, --version                             Display version of taskr
     -h, --help                                Display this screen
 

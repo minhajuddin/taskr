@@ -101,10 +101,6 @@ EOS
           tl.print tl.find(ids)
           exit
         end
-        opts.on('-x','--xmobar','Text to be shown in xmobar') do
-          tl.xmobar
-          exit
-        end
         opts.on( '-v', '--version', 'Display version of taskr' ) do
           puts Taskr::VERSION
           exit
