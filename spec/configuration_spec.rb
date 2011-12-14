@@ -4,11 +4,13 @@ require "fakefs/safe"
 describe Configuration do
 
   describe ".load without config" do
+
     before(:each) do
       FakeFS.activate!
     end
+
     it "should load defaults" do
-      Configuration.load
+      Configuration.load("nonexistentfile.rb")
       Configuration.config.attributes[:list_size].should == 20
     end
 
