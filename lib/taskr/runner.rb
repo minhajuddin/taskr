@@ -25,7 +25,7 @@ Usage: taskr [options]
 Options:
 EOS
 
-        opts.on('-a', '--add task description', :NONE, 'Add task to the list') do
+        opts.on('-a', '--add TASK', :NONE, 'Add task to the list') do
           tl.append(ARGV.join(' '))
           exit
         end
@@ -107,6 +107,10 @@ EOS
         end
         opts.on( '-h', '--help', 'Display this screen' ) do
           puts opts
+          exit
+        end
+        opts.on( '-i', '--ids [PATTERN]', 'Used by tab completion' ) do |id|
+          puts tl.ids(id)
           exit
         end
       end

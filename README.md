@@ -133,6 +133,7 @@ au BufNewFile,BufRead *.taskr  setf taskr
  - allow users to configure priority rules
  - allow users to configure :tag rules
  - allow users to configure :tag transforms
+ - add reminders? (When a task is added to the tray, it can probably look at the estimate and remind you if you have finished it)
 
 ##Author
   Created by Khaja Minhajuddin: minhajuddin (at) cosmicvent (dot) com

@@ -18,7 +18,7 @@ class Task
 
   def to_s
     text_string = in_tray? ? self.text.colorize(:background => :white, :color => :black) : (self.transformed_tags.include?(':today') ? self.text.colorize(:color => :cyan) : self.text)
-    "#{id.colorize(:yellow)}. #{text_string} #{ tag_s } (#{self.time.colorize(:magenta)} #{self.priority_text.colorize(:light_yellow)})"
+    "#{id.colorize(:yellow)}. #{text_string} #{ tag_s } (#{self.time.colorize(:magenta)} #{self.priority_text.colorize(:light_yellow)} #{priority})"
   end
 
   def tag_s
@@ -32,8 +32,9 @@ class Task
 
   def priority
     priority = 0
-    priority += 100 if in_tray? #TODO: should probably live in the config
-    priority += 10 if self.tags.include?(':today')
+
+    priority += self.tags.map{|x| Configuration.tag_priorities[x]}.compact.inject(0){|x, y| x + y} if tags && !tags.empty?
+
     priority += priority_text.count('+')
     priority -= priority_text.count('-')
   end

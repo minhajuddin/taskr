@@ -6,8 +6,12 @@ class TaskList
     Scheduler.new(self).materialize_recurring_tasks
   end
 
+  def visible_tasks
+    @tasks.select{|x| x.visible?}
+  end
+
   def list(num = 5)
-    print num == :all ? @tasks : @tasks.select{|x| x.visible?}.take(num)
+    print num == :all ? @tasks : visible_tasks.take(num)
   end
 
   def search(q)
@@ -80,6 +84,23 @@ class TaskList
     return tasks if tasks && !tasks.empty?
     puts 'task(s) not found'.colorize(:red)
     exit
+  end
+
+  def ids(id)
+    ids = visible_tasks.map{|x| x.id}
+    return ids if id.nil? || id.strip.empty?
+    if id =~ /,/
+      all_ids = id.split(',')
+      first_ids = all_ids[0..-2].join(',')
+      last_id = all_ids.last
+      ids.find_all{|x| x =~ /^#{last_id}/}.map{|x| "#{first_ids},#{x}"}
+    else
+      ids.find_all{|x| x =~ /^#{id}/}
+    end
+  end
+
+  def tags(tag)
+    @tasks.map{|x| x.tags}.flatten.find_all{|x| x=~ /^#{tag}/}
   end
 
   def tagify(tags)

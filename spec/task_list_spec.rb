@@ -11,7 +11,9 @@ describe TaskList do
   end
 
   describe "#delete" do
+
     it "should add :hidden tag to recurring tasks" do
+
       list = TaskList.new
       tasks = list.search(":daily")
 

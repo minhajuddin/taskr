@@ -9,6 +9,10 @@ class Configuration
       :priority_regex  => /[+-]+/,
       :tag_regex  =>  /(:[a-zA-Z0-9_:-]+)/,
       :editor => 'vi',
+      :tag_priorities => {
+        ':tray' => 100,
+        ':today' => 10,
+      },
 
       :tag_transforms => {
         (Time.now).strftime(":%Y%m%d") => ':today',
@@ -19,7 +23,7 @@ class Configuration
     }
 
     @attributes.keys.each do |attr|
-      self.instance_eval("def #{attr}(val); @attributes[:#{attr}] = val; end")
+      self.instance_eval("def #{attr}(val); set(:#{attr}, val); end")
     end
 
     instance_eval File.read(config_path) if File.exists?(config_path)
@@ -31,6 +35,14 @@ class Configuration
 
   def self.config
     @@config
+  end
+
+  def set(attr, val)
+    if @attributes[attr].is_a?(Hash)
+      @attributes[attr].merge!(val)
+    else
+      @attributes[attr] = val
+    end
   end
 
   def self.val(attr)
@@ -51,6 +63,10 @@ class Configuration
 
   def self.editor
     val(:editor)
+  end
+
+  def self.tag_priorities
+    val(:tag_priorities)
   end
 
 end
