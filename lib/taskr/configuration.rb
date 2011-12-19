@@ -13,6 +13,12 @@ class Configuration
         ':tray' => 100,
         ':today' => 10,
       },
+      :tag_colors => Hash.new(:yellow).merge({
+        ':today' => :light_yellow,
+        ':yesterday' => :light_yellow,
+        ':tomorrow' => :light_yellow,
+        ':weekend' => :light_yellow
+      }),
 
       :tag_transforms => {
         (Time.now).strftime(":%Y%m%d") => ':today',
@@ -67,6 +73,11 @@ class Configuration
 
   def self.tag_priorities
     val(:tag_priorities)
+  end
+
+
+  def self.tag_colors
+    val(:tag_colors)
   end
 
 end

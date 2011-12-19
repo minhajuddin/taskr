@@ -22,7 +22,7 @@ class Task
   end
 
   def tag_s
-    pretty_tags = transformed_tags.map{|x| [':today', ':yesterday', ':tomorrow', ':weekend' ].include?(x) ? x.colorize(:light_yellow) : x.colorize(:yellow) }
+    pretty_tags = tags.map{|x| x.colorize(Configuration.tag_colors[x])}
     "[#{pretty_tags.join(' ')}]" unless pretty_tags.empty?
   end
 
