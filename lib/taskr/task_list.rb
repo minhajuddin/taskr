@@ -14,7 +14,7 @@ class TaskList
     print num == :all ? @tasks : visible_tasks.take(num)
   end
 
-  def search(q, filter = :visible)
+  def search(q, filter = :all)
     @tasks.select{|x| x.raw =~ /#{q}/i && ( (filter == :visible && x.visible?) || (filter == :all) )}
   end
 
@@ -83,7 +83,7 @@ class TaskList
     tasks = @tasks.find_all{|x| ids.include?(x.id)}
     return tasks if tasks && !tasks.empty?
     puts 'task(s) not found'.colorize(:red)
-    exit
+    []
   end
 
   def ids(id)

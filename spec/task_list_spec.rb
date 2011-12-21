@@ -17,6 +17,7 @@ describe TaskList do
       list = TaskList.new
       tasks = list.search(":daily")
 
+      puts "deleting #{tasks.count} tasks"
       list.delete(tasks.map(&:id))
 
       tasks.each do |t|
