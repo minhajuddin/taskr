@@ -42,8 +42,12 @@ EOS
           tl.print tl.delete(ids)
           exit
         end
-        opts.on('-s','--search REGEX' ,'Search all the tasks' ) do |q|
-          tl.print tl.search(q)
+        opts.on('-s','--search REGEX' ,'Search active/visible tasks matching search regex' ) do |q|
+          tl.print tl.search(q, :visible)
+          exit
+        end
+        opts.on('-S','--search REGEX' ,'Search all the tasks' ) do |q|
+          tl.print tl.search(q, :all)
           exit
         end
         opts.on('-e','--edit [ID]' ,'Open the task(s) file in vi' ) do |id|
@@ -117,9 +121,9 @@ EOS
 
       begin
         optparse.parse!
-      rescue OptionParser::MissingArgument => e
+      rescue StandardError => e
         puts e.message
-        puts optparse.inspect
+        exit
       end
 
       #if it reaches this line, it means no swtiches/options were passed

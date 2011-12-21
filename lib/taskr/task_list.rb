@@ -14,8 +14,8 @@ class TaskList
     print num == :all ? @tasks : visible_tasks.take(num)
   end
 
-  def search(q)
-    @tasks.select{|x| x.raw =~ /#{q}/i}
+  def search(q, filter = :visible)
+    @tasks.select{|x| x.raw =~ /#{q}/i && ( (filter == :visible && x.visible?) || (filter == :all) )}
   end
 
   def print(tasks)
