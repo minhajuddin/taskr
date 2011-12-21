@@ -42,12 +42,20 @@ EOS
           tl.print tl.delete(ids)
           exit
         end
-        opts.on('-s','--search REGEX' ,'Search active/visible tasks matching search regex' ) do |q|
+        opts.on('-s','--search-visible REGEX' ,'Search active/visible tasks matching search regex' ) do |q|
           tl.print tl.search(q, :visible)
           exit
         end
-        opts.on('-S','--search REGEX' ,'Search all the tasks' ) do |q|
+        opts.on('-S','--search-all REGEX' ,'Search all the tasks' ) do |q|
           tl.print tl.search(q, :all)
+          exit
+        end
+        opts.on('-v','--inverse-search-visible REGEX' ,"List visible tasks which don't match the input REGEX" ) do |q|
+          tl.print tl.inverse_search(q, :visible)
+          exit
+        end
+        opts.on('-V','--inverse-search-all REGEX' , "List *all* tasks which don't match the input REGEX" ) do |q|
+          tl.print tl.inverse_search(q, :all)
           exit
         end
         opts.on('-e','--edit [ID]' ,'Open the task(s) file in vi' ) do |id|
@@ -103,10 +111,6 @@ EOS
         #end
         opts.on('-f','--find id1,id2,..', Array, 'Find tasks with ids and show their details') do |ids|
           tl.print tl.find(ids)
-          exit
-        end
-        opts.on( '-v', '--version', 'Display version of taskr' ) do
-          puts Taskr::VERSION
           exit
         end
         opts.on( '-h', '--help', 'Display this screen' ) do
