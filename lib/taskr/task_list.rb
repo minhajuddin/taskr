@@ -40,7 +40,10 @@ class TaskList
     tasks = find(ids)
     tags = tagify(tags)
 
-    tasks.each {|task| task.tags += tags }
+    tasks.each do |task|
+      task.tags += tags
+      task.tags.uniq!
+    end
     save
 
     print tasks
@@ -62,6 +65,8 @@ class TaskList
     tasks.each do|t|
       if t.recurring?
         t.tags << ':hidden'
+        t.tags.uniq!
+        t.tags.delete(':tray').delete(':current')#TODO: should probably go in config
       else
         deleted_tasks << @tasks.delete(t)
       end
