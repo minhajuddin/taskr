@@ -66,7 +66,8 @@ class TaskList
       if t.recurring?
         t.tags << ':hidden'
         t.tags.uniq!
-        t.tags.delete(':tray').delete(':current')#TODO: should probably go in config
+        t.tags.delete(':tray')
+        t.tags.delete(':current')#TODO: should probably go in config
       else
         deleted_tasks << @tasks.delete(t)
       end
