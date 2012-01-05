@@ -33,7 +33,8 @@ class TaskList
 
   def append(task)
     #TODO: decipher special tags like :today, :tomorrow
-    File.open(Configuration.tasks_file_path, 'a') {|f| f.puts "#{Time.now.strftime "%Y%m%d%H%M%S"} #{task.strip}"}
+    task = task.strip
+    File.open(Configuration.tasks_file_path, 'a') {|f| f.puts "#{Time.now.strftime "%Y%m%d%H%M%S"} #{task}"} unless task.empty?
   end
 
   def tag(ids, tags)
