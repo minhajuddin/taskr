@@ -1,0 +1,234 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Taskr by minhajuddin</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="javascripts/scale.fix.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Taskr</h1>
+        <p>Simple command line utility to manage your tasks</p>
+        <p class="view"><a href="https://github.com/minhajuddin/taskr">View the Project on GitHub <small>minhajuddin/taskr</small></a></p>
+        <ul>
+          <li><a href="https://github.com/minhajuddin/taskr/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/minhajuddin/taskr/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/minhajuddin/taskr">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h1>Taskr</h1>
+
+<p><em>Simple command line utility to manage your tasks</em></p>
+
+<h2>Usage</h2>
+
+<p>Taskr allows you to embed all the information about the task <em>in</em> the task.</p>
+
+<ul>
+<li>Any word in a task which begins with <code>:</code> is considered a <em>tag</em>.</li>
+<li>The tags <code>:weekend, :today, :tomorrow, :tray</code> have a special meaning.<br>
+Tasks tagged:
+
+<ul>
+<li>
+<code>:today</code> are highlighted in a different color in the listing and get a higher priority.</li>
+<li>
+<code>:tomorrow</code> are hidden from the default listing. You can list all tasks using the <code>-L</code> switch.</li>
+<li>
+<code>:weekend</code> are visible in the default listing only on weekends. You can list all tasks using the <code>-L</code> switch.</li>
+<li>
+<code>:tray</code> are shown on the top and have a different background color, they have the highest priority. You can put tasks into your tray when you are working on them, or when you want to tackle a bunch of tasks.</li>
+<li>Tasks which have a bunch of pluses(<code>+</code>) get their priority increased by the number of <code>+</code>s. On the other hand tasks with minuses(<code>-</code>)s in them have lower priorities</li>
+</ul>
+</li>
+</ul><p>Deleted tasks are copied into the <code>~/.taskr/tasks.taskr.done</code> file with a timestamp, we can probably add something in the future which allows us to check the time spent on tasks and give more insight into the kind of tasks we work on.</p>
+
+<h2>Features</h2>
+
+<ul>
+<li>Tagging of tasks</li>
+<li>Recurring tasks (available in the <a href="https://github.com/minhajuddin/taskr/tarball/dev">dev branch</a>)</li>
+<li>Contextual task list which changes based on the day of the week (e.g. you may have some tasks to which you want to be shown only on weekends)</li>
+<li>Simple and powerful configuration using ruby (available in <a href="https://github.com/minhajuddin/taskr/tarball/dev">dev branch</a>)</li>
+<li>Highlighting of tasks based on deadline :today</li>
+<li>Simple way to prioritize tasks</li>
+<li>Edit your tasks in vi</li>
+<li>More coming soon ..</li>
+</ul><h2>Screenshot</h2>
+
+<p><img src="http://i.imgur.com/EtaEG.png" alt="Screenshot"></p>
+
+<h2>File storage</h2>
+
+<p>Taskr stores the tasks in a plain text file in the following format:</p>
+
+<div class="highlight">
+<pre>20110913123500 setting up dotfiles :weekend :tray ++
+20110928154156 use slotter/dnotify as an activator for alarms and a notifier/triggerer of events and processes from dnotify :weekend :tray +
+20111122054143 add posts about redirection rewrites on different servers at redirectapp :weekend +++++
+20111115130124 google adwords setup :weekend :20111211 ++
+20110929083045 spool for kindle :weekend +
+20111010161947 setup to take screenshots of stuff on IE7 8 9 chrome firefox :weekend +
+20110915105500 chrome extension with persistent alarm :weekend 
+</pre>
+</div>
+
+
+<p>As you can see it's just a text file with a timestamp for every task.</p>
+
+<h2>Install</h2>
+
+<p><strong>You need ruby - 1.8.7 or 1.9.2 to use taskr.</strong>
+Installing taskr is pretty straightforward, run the following commands</p>
+
+<h4>With git</h4>
+
+<div class="highlight">
+<pre>git clone git://github.com/minhajuddin/taskr.git ~/.taskr-code
+ln -s ~/.taskr-code/bin/taskr ~/bin/t
+<span class="nb">cd</span> ~/.taskr-code/ <span class="o">&amp;&amp;</span> rake setup
+</pre>
+</div>
+
+
+<h4>Without git</h4>
+
+<div class="highlight">
+<pre>curl -Ls https://github.com/minhajuddin/taskr/tarball/master &gt; /tmp/taskr.tar.gz
+<span class="nb">cd</span> /tmp/
+tar -xvf taskr.tar.gz
+mv <span class="k">$(</span>find .  -maxdepth 1 -type d | grep minhajuddin*<span class="k">)</span> ~/.taskr-code
+ln -s ~/.taskr-code/bin/taskr ~/bin/t
+<span class="nb">cd</span> ~/.taskr-code/ <span class="o">&amp;&amp;</span> rake setup
+</pre>
+</div>
+
+
+<h2>Command line help</h2>
+
+<div class="highlight">
+<pre><span class="nv">$ </span>bin/taskr -h
+Usage: taskr <span class="o">[</span>options<span class="o">]</span>
+  Two of the most used options are -l and -a,
+  and you can use these options without the switches.
+
+  e.g.
+    <span class="nv">$ </span>taskr awesome task here hurray <span class="k">for </span>no switches
+      <span class="c">#adds the task to the list and is equivalent to taskr -a awes..</span>
+    <span class="nv">$ </span>taskr
+      <span class="c">#lists all the tasks and is equivalent to 'taskr -l'</span>
+
+Options:
+    -a, --add task description                Add task to the list
+    -l, --list <span class="o">[</span>NUM<span class="o">]</span>                          List all the tasks
+    -L, --list-all                            List all the tasks
+    -d, --delete id1,id2,..                   Delete tasks<span class="o">(</span>s<span class="o">)</span>
+    -s, --search REGEX                        Search all the tasks
+    -e, --edit                                Open the tasks file in vi
+    -t, --tag id1,id2,.. :tag1 :tag2 ..,      Tag task<span class="o">(</span>s<span class="o">)</span>
+    -u, --untag id1,id2,.. :tag1 :tag2 ..,    Untag task<span class="o">(</span>s<span class="o">)</span>
+    -p, --postpone id1,id2,..                 Postpone task<span class="o">(</span>s<span class="o">)</span> to tomorrow
+    -x, --xmobar                              Text to be shown in xmobar
+    -v, --version                             Display version of taskr
+    -h, --help                                Display this screen
+
+</pre>
+</div>
+
+
+<h2>Vim files</h2>
+
+<p>There is a small vim syntax file the vim directory, just copy it to your <code>~/.vim/syntax</code> folder and put the line below in your <code>~/.vimrc</code> to get some basic syntax highlighting when you edit the tasks raw file.</p>
+
+<div class="highlight">
+<pre><span class="k">au</span> <span class="nb">BufNewFile</span><span class="p">,</span><span class="nb">BufRead</span> *.taskr  <span class="k">setf</span> taskr
+</pre>
+</div>
+
+
+<h2>FAQ</h2>
+
+<ol>
+<li>
+<strong>Why is it not packaged as a gem?</strong><br>
+To make it run faster. More info here: <a href="https://gist.github.com/284823">https://gist.github.com/284823</a>
+</li>
+<li>
+<p><strong>Seriously, is 0.5s is gonna make a difference?</strong><br><em>Yes</em>, This is not just from <em>my</em> experience. The perceived slowness of many apps has made me avoid them. <a href="http://www.codinghorror.com/blog/2011/06/performance-is-a-feature.html">Jeff Atwood post on it is a good read</a>  </p>
+
+<blockquote>
+<p>[Google found that] the page with 10 results took 0.4 seconds to generate. The page with 30 results took 0.9 seconds. Half a second delay caused a 20% drop in traffic. Half a second delay killed user satisfaction.
+In A/B tests, [Amazon] tried delaying the page in increments of 100 milliseconds and found that even very small delays would result in substantial and costly drops in revenue.</p>
+</blockquote>
+</li>
+<li>
+<p><strong>How fast is it?</strong><br>
+Very fast</p>
+
+<div class="highlight">
+<pre><span class="nv">$ </span><span class="nb">time </span>t
+real    0m0.039s
+user    0m0.040s
+sys     0m0.000s
+</pre>
+</div>
+</li>
+<li><p><strong>How is it better than Task Warrior or X?</strong><br>
+It is more hackable. To efficiently use it, you don't have to learn hundreds of switches.
+It's similar to markdown, in that, it allows you to attach info to your task in a way which makes sense.
+Read the usage section.</p></li>
+<li><p><strong>Give me a real reason.</strong><br>
+No one loves a task manager built by others, because everyone has something which they do differently. I created this to suit my workflow and needs. And because it's built in ruby and aims to be configurable, I hope it is easier to personalize.</p></li>
+</ol><h2>Todo</h2>
+
+<ul>
+<li>allow listing of tasks from other <em>sources</em>
+</li>
+<li>add tab completion</li>
+</ul><h2>Author</h2>
+
+<p>Created by Khaja Minhajuddin: minhajuddin (at) cosmicvent (dot) com</p>
+
+<h2>Credits</h2>
+
+<ul>
+<li>Uses colorize <code>String</code> extension from <a href="https://github.com/fazibear/colorize">https://github.com/fazibear/colorize</a>
+</li>
+<li>Timeago <code>Time</code> extension from: <a href="http://stackoverflow.com/a/195894/24105">http://stackoverflow.com/a/195894/24105</a>
+</li>
+</ul><h2>Contribute</h2>
+
+<p>To contribute to taskr, just clone the repository, make your changes, and send me a patch or pull request.</p>
+
+<p>You can even contribute by testing the <em>new</em> features from the <a href="https://github.com/minhajuddin/taskr/tree/dev">dev branch</a>.
+<a href="https://github.com/minhajuddin/taskr/tarball/dev">Click here to download the dev code</a></p>
+
+<h2>Alternatives</h2>
+
+<p>There are a few other alternatives if you don't like this:</p>
+
+<ul>
+<li><a href="http://taskwarrior.org/projects/show/taskwarrior">Task warrior, written in C++</a></li>
+<li><a href="https://github.com/rafmagana/dooby">dooby</a></li>
+</ul>
+      </section>
+    </div>
+    <footer>
+      <p>Project maintained by <a href="https://github.com/minhajuddin">minhajuddin</a></p>
+      <p>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></p>
+    </footer>
+    <!--[if !IE]><script>fixScale(document);</script><!--<![endif]-->
+    
+  </body>
+</html>
